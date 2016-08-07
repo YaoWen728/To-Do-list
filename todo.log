@@ -1,0 +1,33 @@
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 590-989-595
+INFO:werkzeug: * Detected change in 'C:\\Users\\Wen\\Desktop\\3103Project\\ProjectFlask.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 590-989-595
+INFO:werkzeug:127.0.0.1 - - [28/Nov/2015 20:43:06] "GET /todo HTTP/1.1" 403 -
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 590-989-595
+INFO:werkzeug: * Detected change in 'C:\\Users\\Wen\\Desktop\\3103Project\\ProjectFlask.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 590-989-595
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 590-989-595
+INFO:werkzeug:127.0.0.1 - - [28/Nov/2015 20:45:52] "GET /todo HTTP/1.1" 403 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Wen\\Desktop\\3103Project\\ProjectFlask.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 590-989-595
+INFO:werkzeug:127.0.0.1 - - [28/Nov/2015 20:48:57] "GET /todo HTTP/1.1" 403 -
+INFO:root:Testing....
+INFO:werkzeug:127.0.0.1 - - [28/Nov/2015 20:49:04] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Wen\\Desktop\\3103Project\\ProjectFlask.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 590-989-595
+INFO:werkzeug: * Detected change in 'C:\\Users\\Wen\\Desktop\\3103Project\\ProjectFlask.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat

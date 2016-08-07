@@ -1,0 +1,41 @@
+
+1.1 Test for getting the all list, a successful attempt with correct user and password.
+This is also the unfilter function in the HTML file.
+
+curl -u user1:Password1 info3103.cs.unb.ca:3752/todo/list
+
+1.2 Fail attempt by providing the wrong user info.
+
+curl -u user1:LOOOOOL info3103.cs.unb.ca:3752/todo/list
+
+*********************************************************************
+
+2.1 Test for getting a all task in a given list.
+This is also the filter function in the HTML file.
+
+curl -u user1:Password1 info3103.cs.unb.ca:3752/todo/user1/page2
+
+2.2 Fail attempt by providing the wrong user info.
+
+curl -u user1:Pa info3103.cs.unb.ca:3752/todo/user1/page2
+
+**********************************************************************
+
+3.1 Posting a new task to the list.
+Same function as the add function in the HTML file
+
+curl -i -H "Content-Type: application/json" -u user1:Password1 -X POST -d '{"UserName": "user1", "ListName": "Page1", "Content":"Ninja Ninja Ninja", "WriteOn": "2010-01-05", "DueOn":"2010-01-06"}' info3103.cs.unb.ca:3752/todo/entry
+
+
+3.2 Fail attempt, mismatch user, user 1 trying to post on user 2's entry
+curl -i -H "Content-Type: application/json" -u user1:Password1 -X POST -d '{"UserName": "user2", "ListName": "Page1", "Content":"Ninja Ninja Ninja", "WriteOn": "2010-01-05", "DueOn":"2010-01-06"}' info3103.cs.unb.ca:3752/todo/entry
+
+**********************************************************************
+
+4.1 Delete a task from the list given a task ID
+Same function as delete...
+
+curl -i -H "Content-Type: application/json" -u user1:Password1 -X DELETE -d  '{"UserName":"User1", "L_ID":"10"}' info3103.cs.unb.ca:3752/todo/user1/10
+
+4.2 Trying to delete task that doesn't belong to the user
+curl -i -H "Content-Type: application/json" -u user1:Password1 -X DELETE -d  '{"UserName":"User2", "L_ID":"11"}' info3103.cs.unb.ca:3752/todo/user2/11

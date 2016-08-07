@@ -1,0 +1,216 @@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+
+<h1>To Do list</h1>
+
+<div class="ar login_popup">
+    <a class="button" href="#" >Login</a>        
+ 
+    <div class="popup">
+        <a href="#" class="close">CLOSE</a>
+        <form>
+            <P><span class="title">Username</span> <input id="username" name="" type="text" /></P>
+            <P><span class="title">Password</span> <input id="password" name="" type="password" /></P>
+            <P><input id="loginButton" name="" type="button" value="Login" /></P>
+			<p><div class="alert alert-info"><strong>Info! </strong>If you enter the correct password, all the following function below will work.</div></p>
+        </form>
+    </div>
+</div>
+
+<p>
+	Return all the task from all the list. <br/>
+    <button class="btn btn-primary btn-md" id="b1">Unfilter</button>
+</p>
+
+<p>
+	Enter the list name to filter out all the task that isn't part of the list. <br/>
+    <input type="text" id="t2"/>
+    <input type="button" class="btn btn-primary btn-md" id ="b2" value="Filter"/>
+</p>
+
+<p>
+	Enter a new task to a list.<br/>
+	Listname:
+    <input type="text" id="t31"/>
+	Content:
+    <input type="text" id="t32"/>
+	Start date:
+    <input type="text" id="t33"/>
+	Due date:
+    <input type="text" id="t34"/>
+    <input type="button" class="btn btn-primary btn-md" id="b3" value="Add"/>
+</p>
+
+<p>
+	Enter the task ID to delete a task from a list.<br/>
+    <input type="text" id="t4"/>
+    <input type="button" class="btn btn-primary btn-md" id="b4" value="Delete" />
+</p>
+
+<div class="container">
+<table style="width:100%" id ="table">
+</table>
+</div>
+
+<br/>
+
+<p id = "p1" ></p>
+
+<script>
+	var username = "";
+	var password = "";
+	
+	$(".button").click(function(e) {
+        $("body").append(''); $(".popup").show(); 
+        $(".close").click(function(e) { 
+            $(".popup, .overlay").hide(); 
+        }); 
+    }); 
+	
+	$("#loginButton").click(function(e) {
+		username = $("#username").val();
+		password = $("#password").val();
+	});
+	
+	
+	$('#b1').click(function(){
+		$.ajax({
+			url: 'http://info3103.cs.unb.ca:3752/todo/list',
+			dataType: 'json',
+			type: 'get',
+			cache: false,
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+			},
+			success: function(data){
+				console.log(JSON.stringify(data.ListTable))
+				$("#table").html("")
+				$("#p1").html("")
+				$("#table").append("<tr>" + "<td>" + "Task ID" + "</td> <td>" + "List Name" + "</td> <td>" + "Content" + "</td> <td>"+ "Start date" + "</td> <td>"+ "Due date" +"</tr>");
+				for( var i in data.ListTable) {
+					$("#table").append("<tr>" + "<td>" + data.ListTable[i].L_ID + "</td> <td>" +data.ListTable[i].ListName + "</td> <td>" + data.ListTable[i].Content + "</td> <td>"+ data.ListTable[i].WriteOn + "</td> <td>"+ data.ListTable[i].DueOn +"</tr>");
+				}
+			}
+		})
+	});
+	
+	$('#b2').click(function(){
+		var item = $('#t2').val()
+			if (!item.trim()) return;
+			$('#t2').val('');
+		
+		$.ajax({
+			url: 'http://info3103.cs.unb.ca:3752/todo/' + encodeURIComponent(username) + '/' + encodeURIComponent(item) ,
+			dataType: 'JSON',
+			type: 'GET',
+			cache: false,
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+			},
+			success: function(data){
+				console.log(JSON.stringify(data.ListTable))
+				$("#table").html("")
+				$("#p1").html("")
+				$("#table").append("<tr>" + "</td> <td>" + "Task ID" + "</td> <td>" + "Content" + "</td> <td>"+ "Start date" + "</td> <td>"+ "Start Date" +"</tr>");
+				for( var i in data.ListTable){
+						$("#table").append("<tr>" + "</td> <td>" + data.ListTable[i].L_ID + "</td> <td>" + data.ListTable[i].Content + "</td> <td>"+ data.ListTable[i].WriteOn + "</td> <td>"+ data.ListTable[i].DueOn +"</tr>");
+				}
+			}
+		})
+	});
+
+	$('#b3').click(function(){
+		var item1 = $('#t31').val()
+			if (!item1.trim()) return;
+			$('#t31').val('');
+		var item2 = $('#t32').val()
+			if (!item2.trim()) return;
+			$('#t32').val('');
+		var item3 = $('#t33').val()
+			if (!item3.trim()) return;
+			$('#t33').val('');
+		var item4 = $('#t34').val()
+			if (!item4.trim()) return;
+			$('#t34').val('');
+
+		$.ajax({
+			url: 'http://info3103.cs.unb.ca:3752/todo/entry',
+			data: JSON.stringify({ ListName: item1, Content: item2, WriteOn: item3, DueOn: item4, UserName: username }),
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+			},
+			contentType:"application/json;",
+			dataType: 'JSON',
+			type: 'POST',
+			cache: false,
+			success: function(){
+				console.log("Done posting successfully.")
+				$("#table").html("")
+				$("#p1").html("")
+				$('#p1').html("<div class='alert alert-success'>Success! Action performed!</div>")
+			}
+		})
+	});
+	
+	$('#b4').click(function(){
+		var delitem = $('#t4').val()
+			if (!delitem.trim()) return;
+			$('#t4').val('');
+		
+		$.ajax({
+			url: 'http://info3103.cs.unb.ca:3752/todo/' + encodeURIComponent(username) + '/' + delitem  ,
+			dataType: 'JSON',
+			type: 'DELETE',
+			cache: false,
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+			},
+			success: function(){
+				$("#table").html("")
+				$("#p1").html("")
+				$('#p1').html("<div class='alert alert-success'>Success! Action performed!</div>")
+			}
+		})
+	});	
+
+</script>
+
+
+<style>
+.button {
+    display: inline-block;
+    background: #000;
+    padding: 5px 10px;
+    z-index: 0;
+    color: #fff;
+}
+ 
+.overlay {
+    z-index: 5;
+    background: rgba(0, 0, 0, .50);
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+ 
+.popup {
+    padding: 10px 10px 35px;
+    background: #fff;
+    z-index: 999;
+    display: none;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}
+</style>
+
+</html>

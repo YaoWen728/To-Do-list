@@ -1,0 +1,149 @@
+#%RAML 0.8
+---
+title: To-do list API
+baseUri: http://info3103.cs.unb.ca/{version}/
+version: v1
+/todo/list:
+	is: [secured]
+	description: All the things to do.
+	get:
+		description: Retrieve all the things to do.
+		queryParameters:
+			UserName:
+				displayName: UserName.
+				required: true
+				type: string
+				description: The user's name.
+				
+		responses:
+			200
+				body:
+					application/json:
+						example: |
+							  "ListTable": [
+								{
+								  "Content": "Assignment 1", 
+								  "DueOn": "2012-01-02", 
+								  "L_ID": 1, 
+								  "ListName": "Page1", 
+								  "WriteOn": "2010-01-01"
+								}, 
+								{
+								  "Content": "Assignment 2", 
+								  "DueOn": "2012-01-02", 
+								  "L_ID": 2, 
+								  "ListName": "Page1", 
+								  "WriteOn": "2010-01-01"
+								}, 
+								{
+								  "Content": "Assignment 3", 
+								  "DueOn": "2012-01-02", 
+								  "L_ID": 3, 
+								  "ListName": "Page1", 
+								  "WriteOn": "2010-01-01"
+								}]			 
+			
+	/{UserName}/{L_ID}:
+		is:[secured]
+		description: Delete a task given the task ID.
+		delete:
+			queryParameters:
+				Task ID:
+					displayName: L_ID
+					required: true
+					type: number
+					description: the task's ID.
+		
+				User Name:
+					displayName: UserName.
+					required: true
+					type: string
+					description: The user's name.
+		responses:
+			200
+				body: 
+					Display: "Success! Action performed"
+					
+	
+	/entry
+		is:[secured]
+		description: Make a new entry by providing the list name, task to do, start date and end date.
+		delete:
+			queryParameters:
+				User Name:
+					displayName: UserName
+					required: true
+					type: string
+					description: The user's name.
+					
+				List Name:
+					displayName: ListName
+					required: true
+					type: string
+					descrption: Name of the list.
+					
+				Content:
+					displayName: Content
+					required: true
+					type: string
+					descrption: The task to do.
+					
+				Start date:
+					displayName: WriteOn
+					required: true
+					type: date
+					descrption: Start date.
+				Due Date:
+					displayName: DueOn
+					required: true
+					type: date
+					descrption: End date.
+				
+		responses:
+			200
+				body: 
+					Display: "Success! Action performed"
+		
+	/{UserName}/{ListName}
+		is: [secured]
+		description: Return the all the task to do within the same list.
+		get:
+			queryParameters:
+				User Name:
+					displayName: UserName
+					required: true
+					type: string
+					description: The user's name.
+				List Name:
+					displayName: ListName
+					required: true
+					type: string
+					descrption: Name of the list.
+					
+			
+			responses:
+				200:
+					body:
+						application/json:
+							example: |
+								{
+								  "ListTable": [
+									{
+									  "Content": "Assignment 1", 
+									  "DueOn": "2012-01-02", 
+									  "L_ID": 1, 
+									  "WriteOn": "2010-01-01"
+									}, 
+									{
+									  "Content": "Assignment 2", 
+									  "DueOn": "2012-01-02", 
+									  "L_ID": 2, 
+									  "WriteOn": "2010-01-01"
+									}, 
+									{
+									  "Content": "Assignment 3", 
+									  "DueOn": "2012-01-02", 
+									  "L_ID": 3, 
+									  "WriteOn": "2010-01-01"
+									}]
+								}	
